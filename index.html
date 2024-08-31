@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/src/fav.png" type="image/x-icon">
+    <link rel="stylesheet" href="/dist/output.css">
+    <meta name="description" content="Explore the ultimate fan site dedicated to Cristiano Ronaldo, The greatest footballers of all time.">
+    <meta name="keywords" content="Cristiano Ronaldo, Ronaldo, CR7, football, soccer, career, achievements, stats, news, biography, goals, highlights, fan site">
+    <meta name="author" content="Muhammad Abdullah">
+    <title>CR7</title>
+    <style>
+        *{
+            font-family: cursive;
+        }
+    </style>
+</head>
+<body>
+    <div class="w-full bg-zinc-900 ">
+        <div class="parent w-full relative top-0 left-0 h-[2000vh] bg-zinc-800 ">
+            <div class=" w-full h-screen sticky left-0 top-0 overflow-x-hidden ">
+                <canvas class=" w-full h-full object-cover " ></canvas>
+                <div class="absolute animate1 z-[2] text-white bottom-10  left-5 ">
+                    <h1 class="mb-11 text-3xl capitalize " >
+                        "Your love makes me strong, your hate makes me unstoppable."
+                    </h1>
+                </div>
+                <div class="absolute animate2 flex z-[2] text-white bottom-10 w-[80%] right-10 opacity-0 ">
+                    <h1 class="leading-20 font-[100] uppercase text-2xl " >
+                        "Dreams are not what you see in your sleep, dreams are things which do not let you sleep."
+                    </h1>
+                </div>
+                <div class="absolute animate3 z-[2] w-full text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center opacity-0  ">
+                    <h1 class="leading-20 font-[100] uppercase text-4xl  " >
+                        "Talent without working hard is nothing."
+                    </h1>
+                </div>
+                <div class="w-full panel translate-x-full absolute top-0 right-0 z-[2] p-10">
+                    <h1 class=" text-white text-xl capitalize " >"I see myself as the best footballer in the world. If you don’t believe you are the best, then you will never achieve all that you are capable of."</h1>
+                </div>
+                <audio class="hidden" id="scrollMusic" src="/src/tubebackr - Dream Potion (freetouse.com).mp3"></audio>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/ScrollTrigger.min.js"></script>
+    <script>
+        const canvas = document.querySelector("canvas");
+        const context = canvas.getContext('2d');
+
+        const frames = {
+            currentIndex: 0,
+            maxIndex: 543
+        }
+        let imagesLoaded = 0;
+        const images = [];
+
+        function preLoader() {
+            for (let i = 1; i <= frames.maxIndex ; i++) {
+                const imageUrl = `./frames/frame_${i.toString().padStart(4, "0")}.jpeg`;
+                const img = new Image();
+                img.src = imageUrl;  
+                img.onload = () =>{
+                    imagesLoaded++;
+                    if(imagesLoaded === frames.maxIndex){
+                        loadImage(frames.currentIndex);
+                        startAnimation();
+                    }
+                }
+                images.push(img);
+            }
+        }
+
+        function loadImage(index){
+            if (index >= 0 && index <= frames.maxIndex) {
+                const img = images[index];
+
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                const scaleX = canvas.width / img.width;
+                const scaleY = canvas.height / img.height;
+                const scale = Math.max(scaleX, scaleY);
+
+                const newWidth = img.width * scale;
+                const newHeight = img.height * scale;
+
+                const offsetX = (canvas.width - newWidth) / 2;
+                const offsetY = (canvas.height - newHeight) / 2;
+
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.imageSmoothingEnabled = true;
+                    context.imageSmoothingQuality = "high";
+                    context.drawImage(img, offsetX, offsetY, newWidth, newHeight);
+                    frames.currentIndex = index;
+            }
+        }
+
+        function startAnimation() {
+                var tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".parent",
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: 2,
+                    }
+                })
+
+                function updateFrame(index){
+                   return {
+                    currentIndex: index,
+                    ease: "linear",
+                    onUpdate: function() {
+                        loadImage(Math.floor(frames.currentIndex))
+                    }
+                }
+                }
+                tl
+                .to(frames, updateFrame(50), "a")
+                .to(".animate1", {opacity: 0, ease: "linear"}, "a")
+
+                .to(frames, updateFrame(80), "b")
+                .to(".animate2", {opacity: 1, ease: "linear"}, "b")
+
+                .to(frames, updateFrame(110), "c")
+                .to(".animate2", {opacity: 1, ease: "linear"}, "c") 
+
+                .to(frames, updateFrame(140), "d")
+                .to(".animate2", {opacity: 0, ease: "linear"}, "d")       
+                
+                .to(frames, updateFrame(170), "e")
+                .to(".animate3", {opacity: 1, ease: "linear"}, "e") 
+
+                .to(frames, updateFrame(200), "f")
+                .to(".animate3", {opacity: 1, ease: "linear"}, "f") 
+
+                .to(frames, updateFrame(230), "g")
+                .to(".animate3", {opacity: 0, ease: "linear"}, "g") 
+
+                .to(frames, updateFrame(260), "h")
+                .to(".panel", {x: "0%", ease: "expo"}, "h")
+
+                .to(frames, updateFrame(290), "i")
+                .to(".panel", {x: "0%", ease: "expo"}, "i") 
+
+                .to(frames, updateFrame(320), "j")
+                .to(".panel", {opacity: 0, ease: "linear"}, "j")  
+
+                .to(frames, updateFrame(350), "k")
+                .to("canvas", {scale: 0.5, ease: "linear"}, "k")
+
+                .to(frames, updateFrame(380), "l")
+                .to(".panelism", {opacity: 1, ease: "expo"}, "l")
+
+                .to(frames, updateFrame(410), "l")
+                .to(".panelism span", {width: 200, ease: "expo"}, "l")
+
+                .to(frames, updateFrame(440), "m")
+                .to("canvas", {scale: 1, ease: "linear"}, "m")
+
+                .to(frames, updateFrame(480), "n")
+                .to(".panelism", {scale: 2, ease: "circ"}, "n")
+
+                .to(frames, updateFrame(537), "o")
+                .to(".panelism", {scale: 2, ease: "circ"}, "o")
+                }
+
+                window.addEventListener("resize", function(){
+                loadImage(Math.floor(frames.currentIndex))
+            })
+
+
+
+            const audio = document.getElementById('scrollMusic');
+        let isScrolling;
+        
+        window.addEventListener('scroll', function () {
+            if (audio.paused) {
+                audio.play();
+            }
+
+            clearTimeout(isScrolling);
+            
+            isScrolling = setTimeout(function() {
+                audio.pause();
+            }, 1000); 
+        });
+
+            preLoader()
+    </script>
+</body>
+</html>

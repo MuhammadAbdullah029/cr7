@@ -1,0 +1,14 @@
+{
+  "name": "scroll-based",
+  "version": "1.0.0",
+  "description": "sroll based animation website",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./src/styles.css -o ./dist/output.css --watch"
+  },
+  "author": "Abdullah",
+  "license": "ISC",
+  "dependencies": {
+    "tailwindcss": "^3.4.9"
+  }
+}
